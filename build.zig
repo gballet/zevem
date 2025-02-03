@@ -32,11 +32,3 @@ pub fn build(b: *std.Build) void {
     const test_step = b.step("test", "Unit test zevem");
     test_step.dependOn(&run_unit_tests_cmd.step);
 }
-
-comptime {
-    const zig_ver_str = "0.14.0-dev.2851+b074fb7dd";
-    const supported_zig = std.SemanticVersion.parse(zig_ver_str) catch unreachable;
-    if (builtin.zig_version.order(supported_zig) != .eq) {
-        @compileError(std.fmt.comptimePrint("Unsupported Zig version {}; require {s}", .{ builtin.zig_version, zig_ver_str }));
-    }
-}
